@@ -3,7 +3,7 @@
 
 using singto.Controllers;
 using sss;
-
+using ccxx;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,9 +14,20 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IUserManager,UserManager>();
+ builder.Services.AddSingleton<IUser,User>();
+ builder.Services.AddSingleton<ICarFactory,CarFactory>();
 
 
 builder.Services.AddSingleton<ILawnMoverCatelogFactory, LawnMoverCatelogFactory>();
+
+builder.Services.AddSingleton<ICarManager[]>(x=>new CarManager[]{
+
+new CarManager(x.GetService<ICarFactory>(),"Bmw"),
+new CarManager(x.GetService<ICarFactory>(),"Bmw"),
+new CarManager(x.GetService<ICarFactory>(),"Audi"),
+new CarManager(x.GetService<ICarFactory>(),"Audi")
+
+});
 
 
 var app = builder.Build();
